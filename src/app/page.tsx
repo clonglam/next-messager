@@ -6,6 +6,8 @@ import { getServerSession } from "next-auth"
 import React from "react"
 import { authOptions } from "./api/auth/[...nextauth]/route"
 import { Metadata } from "next"
+import withAuth from "next-auth/middleware"
+import { useRouter } from "next/navigation"
 
 type Props = {}
 
@@ -16,6 +18,7 @@ export const metadata: Metadata = {
 async function HomePage({}: Props) {
   const session = await getServerSession(authOptions)
 
+  // if (!session) router.push("/auth/login")
   const data = await fetch(env.NEXT_PUBLIC_APP_URL + "/api/getMessages").then(
     (res) => res.json()
   )
